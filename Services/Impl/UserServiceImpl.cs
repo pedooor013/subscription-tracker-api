@@ -150,7 +150,7 @@ namespace StreamingSubscriptionTrackerAPI.Services.Impl
         }
 
         //DTO UTILS
-        private UserResponseDTO ToResponseDTO(User user)
+        private static UserResponseDTO ToResponseDTO(User user)
         {
             return new UserResponseDTO
             {
