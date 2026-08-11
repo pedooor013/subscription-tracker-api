@@ -93,11 +93,11 @@ namespace StreamingSubscriptionTrackerAPI.Controllers
         }
 
         [HttpPut("update/actived/{id}")]
-        public IActionResult UpdateActived(long id, [FromBody] bool actived)
+        public IActionResult UpdateActived(long id, [FromBody] UpdateActivedRequestDTO dto)
         {
             try
             {
-                var updatedUser = _userService.UpdateActived(id, actived);
+                var updatedUser = _userService.UpdateActived(id, dto.Actived);
                 return Ok(updatedUser);
             }
             catch (Exception ex)
@@ -107,11 +107,11 @@ namespace StreamingSubscriptionTrackerAPI.Controllers
         }
         
         [HttpPut("update/password/{id}")]
-        public IActionResult UpdatePassword(long id, [FromBody] string password)
+        public IActionResult UpdatePassword(long id, [FromBody] UpdatePasswordRequestDTO dto)
         {
             try
             {
-                var updatedUser = _userService.UpdatePassword(id, password);
+                var updatedUser = _userService.UpdatePassword(id, dto.Password);
                 return Ok(updatedUser);
             }
             catch (Exception ex)
