@@ -15,7 +15,6 @@ Console.WriteLine($"Ambiente atual: {builder.Environment.EnvironmentName}");
 builder.Services.AddControllers();
 
 var jwtKey = builder.Configuration["Jwt:Key"];
-Console.WriteLine($"JWT Key carregada (tamanho: {jwtKey?.Length ?? 0} caracteres)");
 
 
 builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
