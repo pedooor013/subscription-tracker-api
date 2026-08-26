@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Mvc;
 using StreamingSubscriptionTrackerAPI.DTOs;
 using StreamingSubscriptionTrackerAPI.Services;
+using System.Security.Claims;
 
 namespace StreamingSubscriptionTrackerAPI.Controllers
 {
@@ -56,7 +57,8 @@ namespace StreamingSubscriptionTrackerAPI.Controllers
         {
             try
             {
-                var subscription = _subscriptionService.Create(dto);
+                long userId = long.Parse(User.FindFirstValue(ClaimTypes.NameIdentifier));
+                var subscription = _subscriptionService.Create(dto, userId);
                 return CreatedAtAction(nameof(GetById), new { id = subscription.Id }, subscription);
             }
             catch (ArgumentException ex)

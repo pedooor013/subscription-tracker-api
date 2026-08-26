@@ -16,9 +16,7 @@ namespace StreamingSubscriptionTrackerAPI.Services.Impl
         }
 
         //GET
-        private 
-            
-            SubscriptionCategoryResponseDTO ToResponseDTO(SubscriptionCategory subscriptionCategory) => new SubscriptionCategoryResponseDTO
+        static private SubscriptionCategoryResponseDTO ToResponseDTO(SubscriptionCategory subscriptionCategory) => new SubscriptionCategoryResponseDTO
         {
             Id = subscriptionCategory.Id,
             Name = subscriptionCategory.Name
@@ -55,11 +53,12 @@ namespace StreamingSubscriptionTrackerAPI.Services.Impl
             _context.SubscriptionCategories.Any(sc => sc.Name == name);
 
         //POST
-        public SubscriptionCategoryResponseDTO Create(SubscriptionCategoryRequestDTO dto)
+        public SubscriptionCategoryResponseDTO Create(SubscriptionCategoryRequestDTO dto, long userId)
         {
             var subscriptionCategory = new SubscriptionCategory
             {
-                Name = dto.Name
+                Name = dto.Name,
+                IdUser = userId
             };
 
             _context.SubscriptionCategories.Add(subscriptionCategory);

@@ -44,14 +44,15 @@ namespace StreamingSubscriptionTrackerAPI.Services.Impl
         }
 
         //POST
-        public SubscriptionResponseDTO Create(SubscriptionRequestDTO dto)
+        public SubscriptionResponseDTO Create(SubscriptionRequestDTO dto, long userId)
         {
             var subscription = new Subscription
             {
                 Name = dto.Name,
                 Price = dto.Price,
                 DateToPaid = dto.DateToPaid,
-                IdCategory = dto.IdCategory
+                IdCategory = dto.IdCategory,
+                IdUser = userId
             };
             _context.Subscriptions.Add(subscription);
             _context.SaveChanges();
