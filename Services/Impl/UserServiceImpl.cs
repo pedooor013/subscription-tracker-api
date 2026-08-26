@@ -4,8 +4,7 @@ using StreamingSubscriptionTrackerAPI.Models;
 using StreamingSubscriptionTrackerAPI.Models.Context;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
-using System.Security.
-    s;
+using System.Security;
 using System.Text;
 
 namespace StreamingSubscriptionTrackerAPI.Services.Impl
