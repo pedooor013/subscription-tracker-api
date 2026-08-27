@@ -30,5 +30,8 @@ namespace StreamingSubscriptionTrackerAPI.Models
 
         [Required]
         public DateOnly CreatedAt { get; set; } = DateOnly.FromDateTime(DateTime.UtcNow);
+
+        [Required]
+        public string Role { get; set; } = "User";
     }
 }

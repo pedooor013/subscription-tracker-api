@@ -64,7 +64,8 @@ namespace StreamingSubscriptionTrackerAPI.Services.Impl
                 Email = userDto.Email,
                 Password = BCrypt.Net.BCrypt.HashPassword(userDto.Password),
                 Actived = userDto.Actived,
-                CreatedAt = DateOnly.FromDateTime(DateTime.UtcNow)
+                CreatedAt = DateOnly.FromDateTime(DateTime.UtcNow),
+                Role = "User"
             };
 
             _context.Users.Add(user);
