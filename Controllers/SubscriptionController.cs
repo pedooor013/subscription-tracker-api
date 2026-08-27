@@ -70,6 +70,7 @@ namespace StreamingSubscriptionTrackerAPI.Controllers
         [HttpPut("{id}")]
         public IActionResult Update(long id, [FromBody] SubscriptionRequestDTO dto)
         {
+
             try
             {
                 var subscription = _subscriptionService.Update(id, dto);

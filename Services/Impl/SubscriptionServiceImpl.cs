@@ -104,7 +104,8 @@ namespace StreamingSubscriptionTrackerAPI.Services.Impl
             Price = subscription.Price,
             DateToPaid = subscription.DateToPaid,
             IdCategory = subscription.IdCategory,
-            CategoryName = subscription.Category?.Name
+            CategoryName = subscription.Category?.Name,
+            UserId = subscription.IdUser
         };
     }
 }

@@ -19,7 +19,8 @@ namespace StreamingSubscriptionTrackerAPI.Services.Impl
         static private SubscriptionCategoryResponseDTO ToResponseDTO(SubscriptionCategory subscriptionCategory) => new SubscriptionCategoryResponseDTO
         {
             Id = subscriptionCategory.Id,
-            Name = subscriptionCategory.Name
+            Name = subscriptionCategory.Name,
+            UserId = subscriptionCategory.IdUser
         };
 
         public SubscriptionCategoryResponseDTO GetById(long id)

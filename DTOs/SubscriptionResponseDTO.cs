@@ -9,5 +9,6 @@
         public DateOnly DateToPaid { get; set; }
         public long IdCategory { get; set; }
         public string CategoryName { get; set; }
+        public long UserId { get; internal set; }
     }
 }
