@@ -160,7 +160,8 @@ namespace StreamingSubscriptionTrackerAPI.Services.Impl
                 Username = user.Username,
                 Email = user.Email,
                 Actived = user.Actived,
-                CreatedAt = user.CreatedAt
+                CreatedAt = user.CreatedAt,
+                Role = user.Role
             };
         }
         private UserLoginResponseDTO ToResponseLoginDTO(User user)

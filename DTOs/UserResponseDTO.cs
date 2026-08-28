@@ -7,5 +7,6 @@
         public string Email { get; set; }
         public bool Actived { get; set; }
         public DateOnly CreatedAt { get; set; }
+        public string Role { get; set; }
     }
 }
