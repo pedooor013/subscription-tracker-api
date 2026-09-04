@@ -16,11 +16,17 @@ namespace StreamingSubscriptionTrackerAPI.Services.Impl
         }
 
         //GET
-        public List<SubscriptionResponseDTO> GetAll() =>
-            _context.Subscriptions
-                .Include(s => s.Category)
-                .Select(s => ToResponseDTO(s))
-                .ToList();
+        public async Task<List<SubscriptionResponseDTO>> GetAll(long? filterByUserId)
+        {
+            var query = _context.Subscriptions.AsQueryable();
+
+            if (filterByUserId.HasValue)
+            {
+                query = query.Where(s => s.IdUser == filterByUserId.Value);
+            }
+
+            return await query.Select(s => ToResponseDTO(s)).ToListAsync();
+        }
 
         public SubscriptionResponseDTO GetById(long id)
         {

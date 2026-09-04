@@ -137,7 +137,8 @@ namespace StreamingSubscriptionTrackerAPI.Services.Impl
             var claims = new[]
             {
                 new Claim(ClaimTypes.NameIdentifier, user.Id.ToString()),
-                new Claim(ClaimTypes.Name, user.Username)
+                new Claim(ClaimTypes.Name, user.Username),
+                new Claim(ClaimTypes.Role, user.Role)
             };
 
             var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(jwtKey));
@@ -156,7 +157,7 @@ namespace StreamingSubscriptionTrackerAPI.Services.Impl
         {
             return new UserResponseDTO
             {
-                Id = user.Id,
+                Id = user.Id,   
                 Username = user.Username,
                 Email = user.Email,
                 Actived = user.Actived,

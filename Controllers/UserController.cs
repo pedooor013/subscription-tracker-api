@@ -18,11 +18,13 @@ namespace StreamingSubscriptionTrackerAPI.Controllers
             _userService = userService;
         }
 
+
         [HttpGet]
         public IActionResult GetAll()
         {
             return Ok(_userService.GetAll());
         }
+
 
         [HttpGet("username/{username}")]
         public IActionResult GetByUsername(string username)
@@ -30,11 +32,13 @@ namespace StreamingSubscriptionTrackerAPI.Controllers
             return Ok(_userService.GetByUsername(username));
         }
 
+
         [HttpGet("email/{email}")]
         public IActionResult GetByEmail(string email)
         {
             return Ok(_userService.GetByEmail(email));
         }
+
 
         [HttpGet("{id}")]
         public IActionResult GetById(long id)

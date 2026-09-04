@@ -18,11 +18,16 @@ namespace StreamingSubscriptionTrackerAPI.Controllers
             _subscriptionService = subscriptionService;
         }
 
+
         [HttpGet]
-        public IActionResult GetAll()
+        public async Task<IActionResult> GetAll()
         {
-            return Ok(_subscriptionService.GetAll());
+            var userId = long.Parse(User.FindFirstValue(ClaimTypes.NameIdentifier));
+            long? filterByUserId = User.IsInRole("Admin") ? null : userId;
+            var result = await _subscriptionService.GetAll(filterByUserId);
+            return Ok(result);
         }
+
 
         [HttpGet("{id}")]
         public IActionResult GetById(long id)
