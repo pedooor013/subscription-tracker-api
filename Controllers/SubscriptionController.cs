@@ -22,8 +22,8 @@ namespace StreamingSubscriptionTrackerAPI.Controllers
         [HttpGet]
         public async Task<IActionResult> GetAll()
         {
-            var userId = long.Parse(User.FindFirstValue(ClaimTypes.NameIdentifier));
-            long? filterByUserId = User.IsInRole("Admin") ? null : userId;
+            long? filterByUserId = DescoverRole();
+
             var result = await _subscriptionService.GetAll(filterByUserId);
             return Ok(result);
         }
@@ -34,7 +34,9 @@ namespace StreamingSubscriptionTrackerAPI.Controllers
         {
             try
             {
-                var subscription = _subscriptionService.GetById(id);
+                long? filterByUserId = DescoverRole();
+
+                var subscription = _subscriptionService.GetById(id, filterByUserId);
                 return Ok(subscription);
             }
             catch (ArgumentException ex)
@@ -48,7 +50,9 @@ namespace StreamingSubscriptionTrackerAPI.Controllers
         {
             try
             {
-                var subscription = _subscriptionService.GetSubscriptionFromCategory(id);
+                long? filterByUserId = DescoverRole();
+
+                var subscription = _subscriptionService.GetSubscriptionFromCategory(id, filterByUserId);
                 return Ok(subscription);
             }
             catch (ArgumentException ex)
@@ -78,7 +82,9 @@ namespace StreamingSubscriptionTrackerAPI.Controllers
 
             try
             {
-                var subscription = _subscriptionService.Update(id, dto);
+                long? filterByUserId = DescoverRole();
+
+                var subscription = _subscriptionService.Update(id, dto, filterByUserId);
                 return Ok(subscription);
             }
             catch (ArgumentException ex)
@@ -92,13 +98,24 @@ namespace StreamingSubscriptionTrackerAPI.Controllers
         {
             try
             {
-                _subscriptionService.Delete(id);
+                long? filterByUserId = DescoverRole();
+
+                _subscriptionService.Delete(id, filterByUserId);
                 return NoContent();
             }
             catch (ArgumentException ex)
             {
                 return BadRequest(ex.Message);
             }
+        }
+
+        //Utils
+        protected long? DescoverRole()
+        {
+            var userId = long.Parse(User.FindFirstValue(ClaimTypes.NameIdentifier));
+            long? filterByUserId = User.IsInRole("Admin") ? null : userId;
+            return filterByUserId;
+
         }
     }
 }

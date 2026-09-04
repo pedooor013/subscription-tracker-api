@@ -28,7 +28,7 @@ namespace StreamingSubscriptionTrackerAPI.Services.Impl
             return await query.Select(s => ToResponseDTO(s)).ToListAsync();
         }
 
-        public SubscriptionResponseDTO GetById(long id)
+        public SubscriptionResponseDTO GetById(long id, long? filterByUserId)
         {
             var subscription = _context.Subscriptions
                 .Include(s => s.Category)
@@ -39,7 +39,7 @@ namespace StreamingSubscriptionTrackerAPI.Services.Impl
             return ToResponseDTO(subscription);
         }
 
-        public List<SubscriptionResponseDTO> GetSubscriptionFromCategory(long idCategory)
+        public List<SubscriptionResponseDTO> GetSubscriptionFromCategory(long idCategory, long? filterByUserId)
         {
             var subscriptions = _context.Subscriptions
                 .Include(s => s.Category)
@@ -70,7 +70,7 @@ namespace StreamingSubscriptionTrackerAPI.Services.Impl
         }
 
         //PUT
-        public SubscriptionResponseDTO Update(long id, SubscriptionRequestDTO dto)
+        public SubscriptionResponseDTO Update(long id, SubscriptionRequestDTO dto, long? filterByUserId)
         {
             var existingSubscription = _context.Subscriptions
                 .Include(s => s.Category)
@@ -92,7 +92,7 @@ namespace StreamingSubscriptionTrackerAPI.Services.Impl
         }
 
         //DELETE
-        public void Delete(long id)
+        public void Delete(long id, long? filterByUserId)
         {
             var existingSubscription = _context.Subscriptions.Find(id);
 
@@ -113,5 +113,6 @@ namespace StreamingSubscriptionTrackerAPI.Services.Impl
             CategoryName = subscription.Category?.Name,
             UserId = subscription.IdUser
         };
+
     }
 }
