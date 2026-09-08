@@ -5,7 +5,7 @@ namespace StreamingSubscriptionTrackerAPI.Services
     public interface ISubscriptionService
     {
         //GET
-        SubscriptionResponseDTO GetById(long id);
+        SubscriptionResponseDTO GetById(long id, long? filterByUserId);
         Task<List<SubscriptionResponseDTO>> GetAll(long? filterByUserId);
         List<SubscriptionResponseDTO> GetSubscriptionFromCategory(long idCategory, long? filterByUserId);
 

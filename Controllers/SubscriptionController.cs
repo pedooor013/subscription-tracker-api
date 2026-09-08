@@ -22,7 +22,7 @@ namespace StreamingSubscriptionTrackerAPI.Controllers
         [HttpGet]
         public async Task<IActionResult> GetAll()
         {
-            long? filterByUserId = DescoverRole();
+            long? filterByUserId = DiscoverRole();
 
             var result = await _subscriptionService.GetAll(filterByUserId);
             return Ok(result);
@@ -34,7 +34,7 @@ namespace StreamingSubscriptionTrackerAPI.Controllers
         {
             try
             {
-                long? filterByUserId = DescoverRole();
+                long? filterByUserId = DiscoverRole();
 
                 var subscription = _subscriptionService.GetById(id, filterByUserId);
                 return Ok(subscription);
@@ -50,7 +50,7 @@ namespace StreamingSubscriptionTrackerAPI.Controllers
         {
             try
             {
-                long? filterByUserId = DescoverRole();
+                long? filterByUserId = DiscoverRole();
 
                 var subscription = _subscriptionService.GetSubscriptionFromCategory(id, filterByUserId);
                 return Ok(subscription);
@@ -82,7 +82,7 @@ namespace StreamingSubscriptionTrackerAPI.Controllers
 
             try
             {
-                long? filterByUserId = DescoverRole();
+                long? filterByUserId = DiscoverRole();
 
                 var subscription = _subscriptionService.Update(id, dto, filterByUserId);
                 return Ok(subscription);
@@ -98,7 +98,7 @@ namespace StreamingSubscriptionTrackerAPI.Controllers
         {
             try
             {
-                long? filterByUserId = DescoverRole();
+                long? filterByUserId = DiscoverRole();
 
                 _subscriptionService.Delete(id, filterByUserId);
                 return NoContent();
@@ -110,7 +110,7 @@ namespace StreamingSubscriptionTrackerAPI.Controllers
         }
 
         //Utils
-        protected long? DescoverRole()
+        protected long? DiscoverRole()
         {
             var userId = long.Parse(User.FindFirstValue(ClaimTypes.NameIdentifier));
             long? filterByUserId = User.IsInRole("Admin") ? null : userId;

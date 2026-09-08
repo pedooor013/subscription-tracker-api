@@ -30,9 +30,22 @@ namespace StreamingSubscriptionTrackerAPI.Services.Impl
 
         public SubscriptionResponseDTO GetById(long id, long? filterByUserId)
         {
+            var query = _context.Subscriptions.AsQueryable();
+
+
+
+
             var subscription = _context.Subscriptions
                 .Include(s => s.Category)
                 .FirstOrDefault(s => s.Id == id);
+
+            if (filterByUserId.HasValue)
+            {
+                if(subscription.IdUser != filterByUserId.Value)
+                {
+                    throw new ArgumentException($"Subscription with id {id} not found.");
+                }
+            }
 
             if (subscription == null) throw new ArgumentException($"Subscription with id {id} not found.");
 
@@ -97,6 +110,14 @@ namespace StreamingSubscriptionTrackerAPI.Services.Impl
             var existingSubscription = _context.Subscriptions.Find(id);
 
             if (existingSubscription == null) throw new ArgumentException($"Subscription with id {id} not found.");
+
+            if (filterByUserId.HasValue)
+            {
+                if (existingSubscription.IdUser != filterByUserId.Value)
+                {
+                    throw new ArgumentException($"Subscription with id {id} not found.");
+                }
+            }
 
             _context.Subscriptions.Remove(existingSubscription);
             _context.SaveChanges();
