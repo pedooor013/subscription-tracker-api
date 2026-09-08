@@ -118,7 +118,6 @@ namespace StreamingSubscriptionTrackerAPI.Services.Impl
                     throw new ArgumentException($"Subscription with id {id} not found.");
                 }
             }
-
             _context.Subscriptions.Remove(existingSubscription);
             _context.SaveChanges();
         }

@@ -69,12 +69,20 @@ namespace StreamingSubscriptionTrackerAPI.Services.Impl
         }
 
         //PUT
-        public SubscriptionCategoryResponseDTO Update(long id, SubscriptionCategoryRequestDTO dto)
+        public SubscriptionCategoryResponseDTO Update(long categoryId, SubscriptionCategoryRequestDTO dto, long? filterByUserId)
         {
-            var existingSubscriptionCategory = _context.SubscriptionCategories.Find(id);
+            var existingSubscriptionCategory = _context.SubscriptionCategories.Find(categoryId);
 
             if (existingSubscriptionCategory == null)
-                throw new ArgumentException("Subscription category not found");
+                throw new ArgumentException("Subscription category not found" + categoryId);
+
+            if(filterByUserId.HasValue)
+            {
+                if (existingSubscriptionCategory.IdUser != filterByUserId.Value)
+                {
+                    throw new ArgumentException("You can't update this subscription category!");
+                }
+            }
 
             existingSubscriptionCategory.Name = dto.Name;
 
@@ -84,12 +92,20 @@ namespace StreamingSubscriptionTrackerAPI.Services.Impl
         }
 
         //DELETE
-        public void Delete(long id)
+        public void Delete(long categoryId, long? filterByUserId)
         {
-            var existingSubscriptionCategory = _context.SubscriptionCategories.Find(id);
+            var existingSubscriptionCategory = _context.SubscriptionCategories.Find(categoryId);
 
             if (existingSubscriptionCategory == null)
                 throw new ArgumentException("Subscription category not found");
+
+            if (filterByUserId.HasValue)
+            {
+                if (existingSubscriptionCategory.IdUser != filterByUserId.Value)
+                {
+                    throw new ArgumentException("You can't delete this subscription category!");
+                }
+            }
 
             _context.SubscriptionCategories.Remove(existingSubscriptionCategory);
             _context.SaveChanges();

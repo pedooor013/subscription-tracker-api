@@ -72,12 +72,14 @@ namespace StreamingSubscriptionTrackerAPI.Controllers
             }
         }
 
-        [HttpPut("{id}")]
-        public IActionResult Update(long id, [FromBody] SubscriptionCategoryRequestDTO dto)
+        [HttpPut("{categoryId}")]
+        public IActionResult Update(long categoryId, [FromBody] SubscriptionCategoryRequestDTO dto)
         {
             try
             {
-                var subscriptionCategory = _subscriptionCategoryService.Update(id, dto);
+                long? filterByUserId = DiscoverRole();
+
+                var subscriptionCategory = _subscriptionCategoryService.Update(categoryId, dto, filterByUserId);
                 return Ok(subscriptionCategory);
             }
             catch (ArgumentException ex)
@@ -91,13 +93,24 @@ namespace StreamingSubscriptionTrackerAPI.Controllers
         {
             try
             {
-                _subscriptionCategoryService.Delete(id);
+                long? filterByUserId = DiscoverRole();
+
+                _subscriptionCategoryService.Delete(id, filterByUserId);
                 return NoContent();
             }
             catch (ArgumentException ex)
             {
                 return NotFound(ex.Message);
             }
-        }       
+        }
+
+        //Utils
+        protected long? DiscoverRole()
+        {
+            var userId = long.Parse(User.FindFirstValue(ClaimTypes.NameIdentifier));
+            long? filterByUserId = User.IsInRole("Admin") ? null : userId;
+            return filterByUserId;
+
+        }
     }
 }

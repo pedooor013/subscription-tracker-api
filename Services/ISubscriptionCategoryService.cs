@@ -12,9 +12,9 @@ namespace StreamingSubscriptionTrackerAPI.Services
         //POST
         SubscriptionCategoryResponseDTO Create(SubscriptionCategoryRequestDTO subscriptionCategory, long userId);
         //PUT
-        SubscriptionCategoryResponseDTO Update(long id, SubscriptionCategoryRequestDTO subscriptionCategory);
+        SubscriptionCategoryResponseDTO Update(long categoryId, SubscriptionCategoryRequestDTO subscriptionCategory, long? filterByUserId);
         //DELETE
-        void Delete(long id);
+        void Delete(long id, long? filterByUserId);
 
     }
 }
