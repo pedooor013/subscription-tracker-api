@@ -1,6 +1,7 @@
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
+using StreamingSubscriptionTrackerAPI.Middleware;
 using StreamingSubscriptionTrackerAPI.Models.Context;
 using StreamingSubscriptionTrackerAPI.Services;
 using StreamingSubscriptionTrackerAPI.Services.Impl;
@@ -54,6 +55,7 @@ if (app.Environment.IsDevelopment())
 app.UseHttpsRedirection();
 
 app.UseAuthentication();
+app.UseMiddleware<ExceptionMiddleware>();
 app.UseAuthorization();
 
 app.MapControllers();

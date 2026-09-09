@@ -87,62 +87,34 @@ namespace StreamingSubscriptionTrackerAPI.Controllers
         [HttpPut("update/{id}")]
         public IActionResult Update(long id, [FromBody] UserRequestDTO userDto)
         {
-            try
-            {
                 long? filterByUserId = DiscoverRole();
 
                 var updatedUser = _userService.Update(id, userDto, filterByUserId);
                 return Ok(updatedUser);
-            }
-            catch (Exception ex)
-            {
-                return BadRequest(ex.Message);
-            }
         }
 
         [HttpPut("update/actived/{id}")]
         public IActionResult UpdateActived(long id, [FromBody] UpdateActivedRequestDTO dto)
         {
-            try
-            {
                 long? filterByUserId = DiscoverRole();
                 var updatedUser = _userService.UpdateActived(id, dto.Actived, filterByUserId);
                 return Ok(updatedUser);
-            }
-            catch (Exception ex)
-            {
-                return BadRequest(ex.Message);
-            }
         }
         
         [HttpPut("update/password/{id}")]
         public IActionResult UpdatePassword(long id, [FromBody] UpdatePasswordRequestDTO dto)
         {
-            try
-            {
                 long? filterByUserId = DiscoverRole(); 
                 var updatedUser = _userService.UpdatePassword(id, dto.Password, filterByUserId);
                 return Ok(updatedUser);
-            }
-            catch (Exception ex)
-            {
-                return BadRequest(ex.Message);
-            }
         }
 
         [HttpDelete("delete/{id}")]
         public IActionResult Delete(long id)
         {
-            try
-            {
                 long? filterByUserId = DiscoverRole();
                 var deletedUser = _userService.Delete(id, filterByUserId);
                 return Ok(deletedUser);
-            }
-            catch (Exception ex)
-            {
-                return BadRequest(ex.Message);
-            }
         }
 
         //Utils

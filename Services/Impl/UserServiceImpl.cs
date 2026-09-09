@@ -6,6 +6,7 @@ using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Security;
 using System.Text;
+using StreamingSubscriptionTrackerAPI.Exceptions;
 
 namespace StreamingSubscriptionTrackerAPI.Services.Impl
 {
@@ -95,7 +96,7 @@ namespace StreamingSubscriptionTrackerAPI.Services.Impl
             {
                 if(existingUser.Id != filterByUserId.Value) 
                 {
-                    throw new ArgumentException("Forbiden");
+                    throw new ForbiddenException("You don't have authorization to do this.");
                 }
             }
             
@@ -116,7 +117,7 @@ namespace StreamingSubscriptionTrackerAPI.Services.Impl
             {
                 if (existingUser.Id != filterByUserId.Value)
                 {
-                    throw new ArgumentException("Forbiden");
+                    throw new ForbiddenException("You don't have authorization to do this.");
                 }
             }
 
@@ -134,7 +135,7 @@ namespace StreamingSubscriptionTrackerAPI.Services.Impl
             {
                 if (existingUser.Id != filterByUserId.Value)
                 {
-                    throw new ArgumentException("Forbiden");
+                    throw new ForbiddenException("You don't have authorization to do this.");
                 }
             }
 
@@ -153,7 +154,7 @@ namespace StreamingSubscriptionTrackerAPI.Services.Impl
             {
                 if (existingUser.Id != filterByUserId.Value)
                 {
-                    throw new ArgumentException("Forbiden");
+                    throw new ForbiddenException("You don't have authorization to do this.");
                 }
             }
 
