@@ -16,11 +16,11 @@ namespace StreamingSubscriptionTrackerAPI.Services
         UserLoginResponseDTO Login(string usernameDto, string passwordDto);
 
         //PUT
-        UserResponseDTO Update(long id, UserRequestDTO userDto);
-        UserResponseDTO UpdateActived(long id, bool actived);
-        UserResponseDTO UpdatePassword(long id, string password);
+        UserResponseDTO Update(long id, UserRequestDTO userDto, long? filterByUserId);
+        UserResponseDTO UpdateActived(long id, bool actived, long? filterByUserId);
+        UserResponseDTO UpdatePassword(long id, string password, long? filterByUserId);
 
         //DELETE
-        UserResponseDTO Delete(long id);
+        UserResponseDTO Delete(long id, long? filterByUserId);
     }
 }

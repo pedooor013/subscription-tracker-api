@@ -1,8 +1,9 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
+using StreamingSubscriptionTrackerAPI.DTOs;
 using StreamingSubscriptionTrackerAPI.Models;
 using StreamingSubscriptionTrackerAPI.Services;
-using StreamingSubscriptionTrackerAPI.DTOs;
-using Microsoft.AspNetCore.Authorization;
+using System.Security.Claims;
 
 namespace StreamingSubscriptionTrackerAPI.Controllers
 {
@@ -18,34 +19,35 @@ namespace StreamingSubscriptionTrackerAPI.Controllers
             _userService = userService;
         }
 
-
+        [Authorize(Roles = "Admin")]
         [HttpGet]
         public IActionResult GetAll()
         {
             return Ok(_userService.GetAll());
         }
 
-
+        [Authorize(Roles = "Admin")]
         [HttpGet("username/{username}")]
         public IActionResult GetByUsername(string username)
         {
             return Ok(_userService.GetByUsername(username));
         }
 
-
+        [Authorize(Roles = "Admin")]
         [HttpGet("email/{email}")]
         public IActionResult GetByEmail(string email)
         {
             return Ok(_userService.GetByEmail(email));
         }
 
-
+        [Authorize(Roles = "Admin")]
         [HttpGet("{id}")]
         public IActionResult GetById(long id)
         {
             return Ok(_userService.GetById(id));
         }
 
+        [Authorize(Roles = "Admin")]
         [HttpGet("actived/{actived}")]
         public IActionResult GetByActived(bool actived)
         {
@@ -87,7 +89,9 @@ namespace StreamingSubscriptionTrackerAPI.Controllers
         {
             try
             {
-                var updatedUser = _userService.Update(id, userDto);
+                long? filterByUserId = DiscoverRole();
+
+                var updatedUser = _userService.Update(id, userDto, filterByUserId);
                 return Ok(updatedUser);
             }
             catch (Exception ex)
@@ -101,7 +105,8 @@ namespace StreamingSubscriptionTrackerAPI.Controllers
         {
             try
             {
-                var updatedUser = _userService.UpdateActived(id, dto.Actived);
+                long? filterByUserId = DiscoverRole();
+                var updatedUser = _userService.UpdateActived(id, dto.Actived, filterByUserId);
                 return Ok(updatedUser);
             }
             catch (Exception ex)
@@ -115,7 +120,8 @@ namespace StreamingSubscriptionTrackerAPI.Controllers
         {
             try
             {
-                var updatedUser = _userService.UpdatePassword(id, dto.Password);
+                long? filterByUserId = DiscoverRole(); 
+                var updatedUser = _userService.UpdatePassword(id, dto.Password, filterByUserId);
                 return Ok(updatedUser);
             }
             catch (Exception ex)
@@ -129,13 +135,23 @@ namespace StreamingSubscriptionTrackerAPI.Controllers
         {
             try
             {
-                var deletedUser = _userService.Delete(id);
+                long? filterByUserId = DiscoverRole();
+                var deletedUser = _userService.Delete(id, filterByUserId);
                 return Ok(deletedUser);
             }
             catch (Exception ex)
             {
                 return BadRequest(ex.Message);
             }
+        }
+
+        //Utils
+        protected long? DiscoverRole()
+        {
+            var userId = long.Parse(User.FindFirstValue(ClaimTypes.NameIdentifier));
+            long? filterByUserId = User.IsInRole("Admin") ? null : userId;
+            return filterByUserId;
+
         }
 
     }

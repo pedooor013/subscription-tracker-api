@@ -86,11 +86,18 @@ namespace StreamingSubscriptionTrackerAPI.Services.Impl
         }
 
         //PUT
-        public UserResponseDTO Update(long id, UserRequestDTO userDto)
+        public UserResponseDTO Update(long id, UserRequestDTO userDto, long? filterByUserId)
         {
             var existingUser = _context.Users.FirstOrDefault(u => u.Id == id);
-
             if (existingUser == null) throw new ArgumentException($"User with ID {id} not found.");
+            
+            if (filterByUserId.HasValue)
+            {
+                if(existingUser.Id != filterByUserId.Value) 
+                {
+                    throw new ArgumentException("Forbiden");
+                }
+            }
             
             existingUser.Username = userDto.Name;
             existingUser.Email = userDto.Email;
@@ -100,30 +107,56 @@ namespace StreamingSubscriptionTrackerAPI.Services.Impl
             return ToResponseDTO(existingUser);
         }
 
-        public UserResponseDTO UpdateActived(long id, bool actived)
+        public UserResponseDTO UpdateActived(long id, bool actived, long? filterByUserId)
         {
             var existingUser = _context.Users.FirstOrDefault(u => u.Id == id);
             if (existingUser == null) throw new ArgumentException($"User with ID {id} not found.");
+
+            if (filterByUserId.HasValue)
+            {
+                if (existingUser.Id != filterByUserId.Value)
+                {
+                    throw new ArgumentException("Forbiden");
+                }
+            }
 
             existingUser.Actived = actived;
             _context.SaveChanges();
             return ToResponseDTO(existingUser);
         }
 
-        public UserResponseDTO UpdatePassword(long id, string password)
+        public UserResponseDTO UpdatePassword(long id, string password, long? filterByUserId)
         {
             var existingUser = _context.Users.FirstOrDefault(u => u.Id == id);
             if (existingUser == null) throw new ArgumentException($"User with ID {id} not found.");
+
+            if (filterByUserId.HasValue)
+            {
+                if (existingUser.Id != filterByUserId.Value)
+                {
+                    throw new ArgumentException("Forbiden");
+                }
+            }
+
             existingUser.Password = BCrypt.Net.BCrypt.HashPassword(password);
             _context.SaveChanges();
             return ToResponseDTO(existingUser);
         }
 
         //DELETE
-        public UserResponseDTO Delete(long id)
+        public UserResponseDTO Delete(long id, long? filterByUserId)
         {
             var existingUser = _context.Users.FirstOrDefault(u => u.Id == id);
             if (existingUser == null) throw new ArgumentException($"User with ID {id} not found.");
+
+            if (filterByUserId.HasValue)
+            {
+                if (existingUser.Id != filterByUserId.Value)
+                {
+                    throw new ArgumentException("Forbiden");
+                }
+            }
+
             _context.Users.Remove(existingUser);
             _context.SaveChanges();
             return ToResponseDTO(existingUser);
