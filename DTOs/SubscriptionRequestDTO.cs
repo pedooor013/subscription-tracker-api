@@ -14,6 +14,6 @@ namespace StreamingSubscriptionTrackerAPI.DTOs
         [Required]
         public DateOnly DateToPaid { get; set; }
         [Required]
-        public int IdCategory { get; set; }
+        public long IdCategory { get; set; }
     }
 }
