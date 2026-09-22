@@ -1,6 +1,7 @@
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
+using StreamingSubscriptionTrackerAPI.Configurations;
 using StreamingSubscriptionTrackerAPI.Middleware;
 using StreamingSubscriptionTrackerAPI.Models.Context;
 using StreamingSubscriptionTrackerAPI.Services;
@@ -9,7 +10,7 @@ using System.Text;
 
 var builder = WebApplication.CreateBuilder(args);
 
-Console.WriteLine($"Ambiente atual: {builder.Environment.EnvironmentName}");
+builder.AddSerilogLogging();
 
 // Add services to the container.
 

@@ -125,6 +125,5 @@ namespace StreamingSubscriptionTrackerAPI.Controllers
             return filterByUserId;
 
         }
-
     }
 }
